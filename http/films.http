@@ -1,0 +1,17 @@
+###Peticion de las peliculas por estrenos, mas vistas en la semana y en el año
+GET http://localhost:3000/api/movie/2
+
+###Busqueda de pelicula por su titulo sin espacio
+GET http://localhost:3000/api/movie/title/ace
+
+###Busqueda de pelicua por su titulo con espacio
+GET http://localhost:3000/api/movie/title/ace%20g
+
+###Busqueda de pelicula por nombre (solo primer nombre) del actor
+GET http://localhost:3000/api/movie/actor/adam
+
+###Busqueda de pelicula por apellido del actor
+GET http://localhost:3000/api/movie/actor/hopper
+
+###Busqueda de pelicula por nombre completo de actor
+GET http://localhost:3000/api/movie/actor/adam%20hopper
