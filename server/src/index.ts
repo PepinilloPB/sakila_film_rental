@@ -5,12 +5,14 @@ import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
 import filmRoutes from './routes/filmRoutes';
 import cartRoutes from './routes/cartRoutes';
-import { OpenidRequest } from 'express-openid-connect';
+//import { OpenidRequest } from 'express-openid-connect';
 import customerRoutes from './routes/customerRoutes';
 
-require('dotenv').config();
+//Variables de entorno (necesario si usamos auth0)
+//require('dotenv').config();
 
-const { auth, requiresAuth } = require('express-openid-connect');
+//Metodos de openid connect
+//const { auth, requiresAuth } = require('express-openid-connect');
 
 class Server{
 
@@ -31,7 +33,8 @@ class Server{
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
 
-        this.app.use(
+        //Conexion con auth0
+        /*this.app.use(
             auth({
                 authRequired: false,
                 auth0Logout: true,
@@ -40,15 +43,15 @@ class Server{
                 clientID: process.env.CLIENT_ID,
                 secret: process.env.SECRET
             })
-        );
+        );*/
     }
     routes(): void{
 
         this.app.use('/api', indexRoutes);//ruta de prueba, deberia mostrar Index Correcto
         this.app.use('/api/movie', filmRoutes);//rutas para peliculas
         this.app.use('/api/cart', cartRoutes);//rutas para carrito 
-        this.app.use('/api/customer', requiresAuth(), customerRoutes);//rutas para cliente
-        //this.app.get('/api/customer', requiresAuth(), (res, req) =>{}); 
+        this.app.use('/api/customer', customerRoutes);//rutas para cliente SIN AUTH0
+        //this.app.use('/api/customer', requiresAuth(), customerRoutes);//rutas para cliente CON AUTH0
     }
     //Corre en puerto 3000 un nuevo servidor
     start(): void{

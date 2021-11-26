@@ -1,8 +1,11 @@
 ###Listar a un cliente, pasando el store_id para crear un nuevo
-###cliente en caso que no exista(necesita pasar por login)
+###cliente en caso que no exista(necesita pasar por login OBLIGATORIAMENTE)
 GET http://localhost:3000/api/customer/1 
 
-###Actualizar cliente (necesita pasar por login)
+###Listar a un cliente, pasando el emial 
+GET http://localhost:3000/api/customer/edgar.carrasco@ucb.edu.bo
+
+###Actualizar cliente (necesita pasar por login SI DIRECCION LO REQUIERE)
 PUT http://localhost:3000/api/customer/600
 Content-Type: application/json
 
@@ -11,24 +14,29 @@ Content-Type: application/json
     "first_name":"EDGAR",
     "last_name":"CARRASCO",
     "email":"edgar.carrasco@ucb.edu.bo",
-    "address_id":5,
+    "address_id":600,
     "active":1,
     "create_date":"2006-02-15T02:04:36.000Z"
 }
 
 ###Listar informacion de la direccion del cliente, a partir del
-###customer_id (necesita pasar por login)
-GET http://localhost:3000/api/customer/address/1
+###customer_id (necesita pasar por login SI DIRECCION LO REQUIERE)
+GET http://localhost:3000/api/customer/address/600
 
-###Actualizar la direccion (necesita pasar por login)
-PUT http://localhost:3000/api/customer/address/600
+###
+POST http://localhost:3000/api/customer/address
 Content-Type: application/json
 
 {
     "address": "1049 Calle Guatemala",
     "address2": "",
-    "district": "Centro",
+    "district": "Miraflores",
     "city_id": 153,
     "postal_code": "",
-    "phone": "70530883",
+    "phone": "70530883"
 }
+
+###Actualizar la direccion (necesita pasar por login SI DIRECCION LO REQUIERE)
+PUT http://localhost:3000/api/customer/address/600
+Content-Type: application/json
+

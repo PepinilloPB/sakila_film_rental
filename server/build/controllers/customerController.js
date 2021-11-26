@@ -16,51 +16,21 @@ exports.customerController = void 0;
 //Pool para queries
 const database_1 = __importDefault(require("../database"));
 class CustomerController {
+    //Estos metodos NO usan openid connect
     //Obtener un cliente por su email
-    //OpenidRequest y OpenidResponse funcionan igual que Request y Response
     list_customer(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { store_id } = req.params;
-            //Verificamos que el usuario exista
-            if (req.oidc.user) {
-                //Pide clientes que coincidan con el email
-                const customers = yield database_1.default.query(' SELECT * ' +
-                    ' FROM customer ' +
-                    ' WHERE email = ? ', [req.oidc.user.email]);
-                //Si el email coincide con algun usuario, el array customers no estará
-                //vacío 
-                if (customers.length > 0) {
-                    //Enviamos los resultados
-                    res.send(customers);
-                    //Si el array customers esta vacío, significa que pasó el login pero no es un cliente
-                    //en la base de datos, por lo creamos 
-                }
-                else {
-                    //Creamos un nuevo cliente, con algunos valores vacios o por defecto
-                    const new_customer = {
-                        store_id: store_id,
-                        first_name: req.oidc.user.name,
-                        last_name: '',
-                        email: req.oidc.user.email,
-                        address_id: 1,
-                        active: 1 //Activo es 1 por defecto
-                    };
-                    //Query para insertar al nuevo cliente en la DB
-                    yield database_1.default.query('INSERT INTO customer SET ?', [new_customer]);
-                    //Repetimos el query para pedir cliente
-                    const customers = yield database_1.default.query(' SELECT * ' +
-                        ' FROM customer ' +
-                        ' WHERE email = ? ', [req.oidc.user.email]);
-                    //Mostramos resultado
-                    res.send(customers);
-                }
-            }
-            else {
-                res.status(404).send('Usuario no encontrado');
-            }
+            //Parametro que tiene el email
+            const { email } = req.params;
+            //Peticion de busqueda por email
+            const customers = yield database_1.default.query(' SELECT * ' +
+                ' FROM customer ' +
+                ' WHERE email = ? ', [email]);
+            //Mostramos resultado
+            res.send(customers);
         });
     }
-    //
+    //Actualizar al cliente
     update_customer(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             //Id del cliente para actualizarlo
@@ -94,6 +64,14 @@ class CustomerController {
             res.send(address);
         });
     }
+    //Crear nueva direccion
+    create_address(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('INSERT INTO address SET ?', [req.body]);
+            res.json({ message: 'address saved' });
+        });
+    }
+    //Actualizar la direccion
     update_address(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             //Id de la direccion para actualizarla

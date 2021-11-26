@@ -8,6 +8,82 @@ import pool from '../database';
 
 class CustomerController{
 
+    //Estos metodos NO usan openid connect
+
+    //Obtener un cliente por su email
+    public async list_customer(req: OpenidRequest, res: OpenidResponse): Promise<any>{
+
+        //Parametro que tiene el email
+        const { email } = req.params;
+
+        //Peticion de busqueda por email
+        const customers = await pool.query(' SELECT * ' + 
+                                            ' FROM customer ' + 
+                                            ' WHERE email = ? ', [email]);
+
+        //Mostramos resultado
+        res.send(customers);
+    }
+
+    //Actualizar al cliente
+    public async update_customer(req: Request, res: Response): Promise<void>{
+
+        //Id del cliente para actualizarlo
+        const { customer_id } = req.params;
+
+        //Actualiza al cliente
+        await pool.query('UPDATE customer SET ? WHERE customer_id = ?', [req.body, customer_id]);
+
+        //Mensaje de aprobacion
+        res.json({message: 'customer updated'});
+    }
+
+    //Obtener la direccion de un cliente 
+    public async get_address(req: Request, res: Response): Promise<any>{
+
+        //Id del cliente para buscar su direccion
+        const { customer_id } = req.params;
+
+        //Pedimos la direccion
+        const address = await pool.query(' SELECT a.address_id, ' +
+                                         '        a.address, ' + 
+                                         '        a.address2, ' + 
+                                         '        a.district, ' + 
+                                         '        c.city, ' + 
+                                         '        co.country, ' +
+                                         '        a.postal_code, ' +
+                                         '        a.phone ' + 
+                                         ' FROM address a '+ 
+                                         '  LEFT JOIN city c ON ( a.city_id = c.city_id) ' +
+                                         '  LEFT JOIN country co ON ( c.country_id = co.country_id) ' +
+                                         '  LEFT JOIN customer cu ON ( a.address_id = cu.address_id) ' + 
+                                         ' WHERE cu.customer_id = ?', [customer_id]);
+        
+        //Mostramos resultado
+        res.send(address);
+    }
+
+    //Crear nueva direccion
+    public async create_address(req: Request, res: Response): Promise<void>{
+        await pool.query('INSERT INTO address SET ?', [req.body]);
+        res.json({message: 'address saved'});
+    }
+
+    //Actualizar la direccion
+    public async update_address(req: Request, res: Response): Promise<void>{
+        
+        //Id de la direccion para actualizarla
+        const { address_id } = req.params;
+
+        //Actualizamos la direccion
+        await pool.query('UPDATE address SET ? WHERE address_id = ?', [req.body, address_id]);
+
+        //Mensaje de aprobacion
+        res.json({message: 'address updated'});
+    }
+
+    //Estos metodos SI usan openid connect
+    /*
     //Obtener un cliente por su email
     //OpenidRequest y OpenidResponse funcionan igual que Request y Response
     public async list_customer(req: OpenidRequest, res: OpenidResponse): Promise<any>{
@@ -57,7 +133,7 @@ class CustomerController{
         }
     }
 
-    //
+    //Actualizar al cliente
     public async update_customer(req: OpenidRequest, res: OpenidResponse): Promise<void>{
 
         //Id del cliente para actualizarlo
@@ -95,6 +171,7 @@ class CustomerController{
         res.send(address);
     }
 
+    //Actualizar la direccion
     public async update_address(req: OpenidRequest, res: OpenidResponse): Promise<void>{
         
         //Id de la direccion para actualizarla
@@ -106,6 +183,7 @@ class CustomerController{
         //Mensaje de aprobacion
         res.json({message: 'address updated'});
     }
+    */
 }
 
 export const customerController = new CustomerController();
