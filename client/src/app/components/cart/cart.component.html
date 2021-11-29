@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <h1 style="margin-bottom: 20px; margin-top: 20px; text-align: center;">{{pay ? 'Pago' : 'Carrito'}}</h1>
+  <p *ngIf="pay" class="d-flex">Bienvenido {{customer.first_name}}</p>
+</div>
+<!--h1 *ngIf="pay">{{end}}</h1-->
+<section style="float: left; width: 60%;">
+    <p>Se ha agregado las siguientes peliculas:</p>
+    <div class="col-md-4" *ngFor='let film of films' style="float: left; width: 50%;">
+        <div class="card border-primary mb-3" style="max-width: 20rem; margin: 20px;">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              {{film.rental_rate}}$
+              <button class="btn btn-danger" (click)="removeFromCart(film.film_id)" *ngIf="!pay">X</button>
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">{{film.title}}</h4>
+              <p class="card-text">{{film.description}}</p>
+            </div>
+          </div>
+    </div>
+</section>
+<section style="float: left; width: 40%;">
+  <div style="margin: 20px; text-align: center;">
+    <h3 *ngIf="pay">TOTAL:</h3>
+    <p *ngIf="pay">{{cost}}$</p>
+    <h3 *ngIf="pay">DSCTO:</h3>
+    <p *ngIf="pay">{{dsct}}%</p>
+    <h3>FECHA DE DEVOLUCIÓN:</h3>
+    <p *ngIf="!pay">La renta solo va desde 1 a 7 días</p>
+    <p *ngIf="error">Error en fecha</p>
+    <p *ngIf="pay">{{fecha_end}}</p>
+    <h3 *ngIf="pay">DIRECCIÓN:</h3>
+    <div class="dropdown" *ngIf="pay">
+      <button class="form-control">{{direccion == '' ? 'Direcciones' : direccion}}</button>
+      <div class="dropdown-content">
+        <a (click)="setAddress(address.address)">{{address.address}}</a>
+        <a (click)="setAddress(address.address2)">{{address.address2 == '' ? '-----' : address.address2}}</a>
+      </div>
+    </div><br>
+    <input class="form-control" type="datetime-local" [(ngModel)]="date_end" *ngIf="!pay"><br>
+    <button class="btn btn-info btn-block" (click)="pay ? payCart() : checkDate()">{{pay ? 'Pay' : 'Buy'}}</button>
+    <button class="btn btn-danger" (click)="backToCart()" *ngIf="pay">Cancel</button>
+  </div>
+</section>

@@ -11,10 +11,11 @@ const filmRoutes_1 = __importDefault(require("./routes/filmRoutes"));
 const cartRoutes_1 = __importDefault(require("./routes/cartRoutes"));
 //import { OpenidRequest } from 'express-openid-connect';
 const customerRoutes_1 = __importDefault(require("./routes/customerRoutes"));
+const rentalRoutes_1 = __importDefault(require("./routes/rentalRoutes"));
 //Variables de entorno (necesario si usamos auth0)
-//require('dotenv').config();
+require('dotenv').config();
 //Metodos de openid connect
-//const { auth, requiresAuth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -28,22 +29,21 @@ class Server {
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: false }));
         //Conexion con auth0
-        /*this.app.use(
-            auth({
-                authRequired: false,
-                auth0Logout: true,
-                issuerBaseURL: process.env.ISSUER_BASE_URL,
-                baseURL: process.env.BASE_URL,
-                clientID: process.env.CLIENT_ID,
-                secret: process.env.SECRET
-            })
-        );*/
+        this.app.use(auth({
+            authRequired: false,
+            auth0Logout: true,
+            issuerBaseURL: process.env.ISSUER_BASE_URL,
+            baseURL: process.env.BASE_URL,
+            clientID: process.env.CLIENT_ID,
+            secret: process.env.SECRET
+        }));
     }
     routes() {
         this.app.use('/api', indexRoutes_1.default); //ruta de prueba, deberia mostrar Index Correcto
         this.app.use('/api/movie', filmRoutes_1.default); //rutas para peliculas
         this.app.use('/api/cart', cartRoutes_1.default); //rutas para carrito 
         this.app.use('/api/customer', customerRoutes_1.default); //rutas para cliente SIN AUTH0
+        this.app.use('/api/rental', rentalRoutes_1.default);
         //this.app.use('/api/customer', requiresAuth(), customerRoutes);//rutas para cliente CON AUTH0
     }
     //Corre en puerto 3000 un nuevo servidor

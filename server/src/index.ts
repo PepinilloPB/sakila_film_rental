@@ -7,12 +7,13 @@ import filmRoutes from './routes/filmRoutes';
 import cartRoutes from './routes/cartRoutes';
 //import { OpenidRequest } from 'express-openid-connect';
 import customerRoutes from './routes/customerRoutes';
+import rentalRoutes from './routes/rentalRoutes';
 
 //Variables de entorno (necesario si usamos auth0)
-//require('dotenv').config();
+require('dotenv').config();
 
 //Metodos de openid connect
-//const { auth, requiresAuth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
 
 class Server{
 
@@ -34,7 +35,7 @@ class Server{
         this.app.use(express.urlencoded({extended: false}));
 
         //Conexion con auth0
-        /*this.app.use(
+        this.app.use(
             auth({
                 authRequired: false,
                 auth0Logout: true,
@@ -43,7 +44,7 @@ class Server{
                 clientID: process.env.CLIENT_ID,
                 secret: process.env.SECRET
             })
-        );*/
+        );
     }
     routes(): void{
 
@@ -51,6 +52,7 @@ class Server{
         this.app.use('/api/movie', filmRoutes);//rutas para peliculas
         this.app.use('/api/cart', cartRoutes);//rutas para carrito 
         this.app.use('/api/customer', customerRoutes);//rutas para cliente SIN AUTH0
+        this.app.use('/api/rental', rentalRoutes);
         //this.app.use('/api/customer', requiresAuth(), customerRoutes);//rutas para cliente CON AUTH0
     }
     //Corre en puerto 3000 un nuevo servidor

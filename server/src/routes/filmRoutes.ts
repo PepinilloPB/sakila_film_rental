@@ -21,6 +21,9 @@ class FilmRoutes{
 
         //Ruta para buscar por nombre de actor
         this.router.get("/actor/:name", filmController.find_by_actor); 
+
+        //Ruta para buscar por id de pelicua
+        this.router.get("/id/:film_id", filmController.find_by_id); 
         
         /*
         //Ruta para listado de estrenos

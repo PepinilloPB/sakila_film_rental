@@ -1,0 +1,55 @@
+<app-navigation></app-navigation>
+<h1 style="margin-bottom: 20px; margin-top: 20px;">Estrenos</h1>
+<div class="col-md-4" *ngFor='let premiere of premieres'>
+    <div class="card text-center">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            {{premiere.title}}
+        </div>
+        <div class="card-body">
+            <p>{{premiere.description}}</p>
+            <h5>Renta: {{premiere.rental_rate}}$</h5>
+            <h6>{{premiere.language}}</h6>
+            <h6>{{premiere.rating}}</h6>
+            <h6>{{premiere.length}} min.</h6>
+            <h6>{{premiere.special_features}}</h6>
+            <h5>{{premiere.release_year}}</h5>
+            <button class="btn btn-info btn-block" (click)="addToCart(premiere.film_id)">Add to Cart</button>
+        </div>
+    </div>
+</div>
+<h1 style="margin-bottom: 20px; margin-top: 20px;">Más vistos en la semana</h1>
+<div class="col-md-4" *ngFor='let week of weekly'>
+    <div class="card text-center">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            {{week.title}}
+        </div>
+        <div class="card-body">
+            <p>{{week.description}}</p>
+            <h5>Renta: {{week.rental_rate}}$</h5>
+            <h6>{{week.language}}</h6>
+            <h6>{{week.rating}}</h6>
+            <h6>{{week.length}} min.</h6>
+            <h6>{{week.special_features}}</h6>
+            <h5>{{week.release_year}}</h5>
+            <button class="btn btn-info btn-block" (click)="addToCart(week.film_id)">Add to Cart</button>
+        </div>
+    </div>
+</div>
+<h1 style="margin-bottom: 20px; margin-top: 20px;">Más vistos en el año</h1>
+<div class="col-md-4" *ngFor='let year of yearly'>
+    <div class="card text-center">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            {{year.title}}
+        </div>
+        <div class="card-body">
+            <p>{{year.description}}</p>
+            <h5>Renta: {{year.rental_rate}}$</h5>
+            <h6>{{year.language}}</h6>
+            <h6>{{year.rating}}</h6>
+            <h6>{{year.length}} min.</h6>
+            <h6>{{year.special_features}}</h6>
+            <h5>{{year.release_year}}</h5>
+            <button class="btn btn-info btn-block" (click)="addToCart(year.film_id)">Add to Cart</button>
+        </div>
+    </div>
+</div>

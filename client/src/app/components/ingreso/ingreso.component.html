@@ -1,0 +1,18 @@
+<div style="margin: 150px;">
+    <h1 style="font-size: 50px;">Bienvenido a Sakila rental</h1><br>
+    <p style="font-size: 30px;">Por favor, seleccione el país en el que desea comprar</p><br><br>
+    <div style="display: grid; grid-template-columns: 2;">
+        <div style="grid-column-start: 1; text-align: center;">
+            <a [routerLink]="['/inicio', 1]">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Canada_%28Pantone%29.svg/135px-Flag_of_Canada_%28Pantone%29.svg.png" alt="">
+            </a>
+            <p>Canada</p>
+        </div>
+        <div style="grid-column-start: 2; text-align: center;">  
+            <a [routerLink]="['/inicio', 2]">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Flag_of_Australia_%28converted%29.svg/135px-Flag_of_Australia_%28converted%29.svg.png" alt="">
+            </a> 
+            <p>Australia</p>
+        </div>
+    </div>
+</div>

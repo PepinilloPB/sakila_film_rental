@@ -22,9 +22,23 @@ class CartController {
     //Metodo para guardar articulos en el carrito
     save_in_cart(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //Agregamos al final de array
-            films.push(req.body);
-            res.json({ message: 'Guarda en carrito' });
+            //Solo se pueden agregar 4 peliculas
+            if (films.length < 4) {
+                //Buscamos si ya agrego esa pelicula antes
+                var index = films.findIndex(film => film.film_id == req.body.film_id);
+                //Si no la encontró, puede agregarla al carrito
+                if (index == -1) {
+                    //Agregamos al final de array
+                    films.push(req.body);
+                    res.json({ message: 'Guarda en carrito' });
+                }
+                else {
+                    res.sendStatus(406);
+                }
+            }
+            else {
+                res.sendStatus(406);
+            }
         });
     }
     //Metodo para remover del carrito

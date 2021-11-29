@@ -27,7 +27,7 @@ class CustomerController {
                 ' FROM customer ' +
                 ' WHERE email = ? ', [email]);
             //Mostramos resultado
-            res.send(customers);
+            res.send(customers[0]);
         });
     }
     //Actualizar al cliente
@@ -61,7 +61,7 @@ class CustomerController {
                 '  LEFT JOIN customer cu ON ( a.address_id = cu.address_id) ' +
                 ' WHERE cu.customer_id = ?', [customer_id]);
             //Mostramos resultado
-            res.send(address);
+            res.send(address[0]);
         });
     }
     //Crear nueva direccion

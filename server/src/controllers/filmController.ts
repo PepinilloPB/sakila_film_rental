@@ -24,16 +24,16 @@ class FilmController{
                                                     '    f.replacement_cost, ' + 
                                                     '    f.rating, ' + 
                                                     '    f.special_features, ' + 
-                                                    '    f.last_update ' +
+                                                    '    f.last_update, ' +
+                                                    '    i.inventory_id ' +
                                                 ' FROM film f ' + 
                                                 '   LEFT JOIN language l ON ( f.language_id = l.language_id) ' +
                                                 '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' +
                                                 '   LEFT JOIN inventory i ON (f.film_id = i.film_id) ' +
-                                                '   LEFT JOIN rental r ON (i.inventory_id = r.inventory_id) ' + 
                                                 '   WHERE i.store_id = ? ' + 
                                                 '   GROUP BY i.film_id ' +
-                                                '   ORDER BY last_update ' + 
-                                                ' LIMIT 10 ', [store_id]);
+                                                '   ORDER BY i.last_update ' + 
+                                                ' LIMIT 9 ', [store_id]);
 
         //Pide las peliculas mas rentadas por la semana
         const films_week = await pool.query('SELECT f.film_id, ' + 
@@ -48,7 +48,8 @@ class FilmController{
                                                 '    f.replacement_cost, ' + 
                                                 '    f.rating, ' + 
                                                 '    f.special_features, ' + 
-                                                '    f.last_update ' +
+                                                '    f.last_update, ' +
+                                                '    i.inventory_id ' +
                                             ' FROM film f ' + 
                                             '   LEFT JOIN language l ON ( f.language_id = l.language_id) ' +
                                             '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' +
@@ -57,7 +58,7 @@ class FilmController{
                                             '   WHERE i.store_id = ? ' + 
                                             '   GROUP BY i.film_id ' +
                                             '   ORDER BY WEEK(r.rental_date) DESC, COUNT(i.film_id) DESC ' + //Revisar que sea WEEK
-                                            '   LIMIT 10', [store_id]);
+                                            '   LIMIT 9', [store_id]);
 
         //Pide las peliculas mas rentadas anualmente
         const films_year = await pool.query('SELECT f.film_id, ' + 
@@ -72,15 +73,17 @@ class FilmController{
                                                '    f.replacement_cost, ' + 
                                                '    f.rating, ' + 
                                                '    f.special_features, ' + 
-                                               '    f.last_update ' +
+                                               '    f.last_update, ' +
+                                               '    i.inventory_id ' +
                                             ' FROM film f ' + 
                                             '   LEFT JOIN language l ON ( f.language_id = l.language_id) ' +
                                             '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' +
                                             '   LEFT JOIN inventory i ON (f.film_id = i.film_id) ' +
-                                            '   LEFT JOIN rental r ON (i.inventory_id = r.inventory_id) ' + 
+                                            '   LEFT JOIN rental r ON (i.inventory_id = r.inventory_id) ' +
+                                            '   WHERE i.store_id = ? ' + 
                                             '   GROUP BY i.film_id ' +
                                             '   ORDER BY YEAR(r.rental_date) DESC, COUNT(i.film_id) DESC ' + //Revisar que sea YEAR
-                                            '   LIMIT 10');
+                                            '   LIMIT 9', [store_id]);
 
         //Guardamos los resultados de todas las peticiones en una matriz
         //IMPORTANTE ORDEN DE MATRIZ: ESTRENOS, SEMANAL, ANUAL 
@@ -109,10 +112,12 @@ class FilmController{
                                         '    f.replacement_cost, ' + 
                                         '    f.rating, ' + 
                                         '    f.special_features, ' + 
-                                        '    f.last_update ' +
+                                        '    f.last_update, ' +
+                                        '    i.inventory_id ' +
                                     ' FROM film f ' + 
                                     '   LEFT JOIN language l ON ( f.language_id = l.language_id) ' +
-                                    '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' + 
+                                    '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' +
+                                    '   LEFT JOIN inventory i ON (f.film_id = i.film_id) ' + 
                                     ' WHERE ' + 
                                     '   INSTR(f.title, ?) > 0', [title]);
 
@@ -148,10 +153,12 @@ class FilmController{
                                             '    f.replacement_cost, ' + 
                                             '    f.rating, ' + 
                                             '    f.special_features, ' + 
-                                            '    f.last_update ' +
+                                            '    f.last_update, ' +
+                                            '    i.inventory_id ' +
                                         ' FROM film f ' + 
                                         '   LEFT JOIN language l ON ( f.language_id = l.language_id) ' +
-                                        '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' + 
+                                        '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' +
+                                        '   LEFT JOIN inventory i ON (f.film_id = i.film_id) ' + 
                                         '   LEFT JOIN film_actor fa ON (f.film_id = fa.film_id) ' +
                                         '   LEFT JOIN actor a ON (fa.actor_id = a.actor_id) ' + 
                                         ' WHERE UPPER(a.first_name) = ? ' + 
@@ -175,10 +182,12 @@ class FilmController{
                                             '    f.replacement_cost, ' + 
                                             '    f.rating, ' + 
                                             '    f.special_features, ' + 
-                                            '    f.last_update ' +
+                                            '    f.last_update, ' +
+                                            '    i.inventory_id ' +
                                         ' FROM film f ' + 
                                         '   LEFT JOIN language l ON ( f.language_id = l.language_id) ' +
-                                        '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' + 
+                                        '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' +
+                                        '   LEFT JOIN inventory i ON (f.film_id = i.film_id) ' + 
                                         '   LEFT JOIN film_actor fa ON (f.film_id = fa.film_id) ' +
                                         '   LEFT JOIN actor a ON (fa.actor_id = a.actor_id) ' + 
                                         ' WHERE UPPER(a.first_name) = ? ' + 
@@ -190,6 +199,37 @@ class FilmController{
         }
     }
 
+    //Buscar por id, solo usado para añadir peliculas al carrito
+    public async find_by_id(req: Request, res: Response): Promise<any>{
+
+        //Parametro pasado por url
+        const { film_id } = req.params;
+
+        //Pedido peliculas que coincidan con el film_id
+        const films = await pool.query('SELECT f.film_id, ' + 
+                                        '    f.title, ' +
+                                        '    f.description, ' + 
+                                        '    f.release_year, ' + 
+                                        '    l.name as language, ' + 
+                                        '    ol.name as original_language, ' +
+                                        '    f.rental_duration, ' + 
+                                        '    f.rental_rate, ' + 
+                                        '    f.length, ' + 
+                                        '    f.replacement_cost, ' + 
+                                        '    f.rating, ' + 
+                                        '    f.special_features, ' + 
+                                        '    f.last_update, ' +
+                                        '    i.inventory_id ' +
+                                    ' FROM film f ' + 
+                                    '   LEFT JOIN language l ON ( f.language_id = l.language_id) ' +
+                                    '   LEFT JOIN language ol ON ( f.original_language_id = ol.language_id) ' +
+                                    '   LEFT JOIN inventory i ON (f.film_id = i.film_id) ' + 
+                                    ' WHERE ' + 
+                                    '   f.film_id = ?', [film_id]);
+
+        //Mostramos los resultados
+        res.json(films[0]);
+    }
 
     //Tentativo: 3 metodos para cada resultado de query
 
