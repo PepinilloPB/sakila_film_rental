@@ -10,6 +10,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { CartComponent } from './components/cart/cart.component';
 import { PagoComponent } from './components/pago/pago.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     InicioComponent,
     CartComponent,
     PagoComponent,
-    NavigationComponent
+    NavigationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

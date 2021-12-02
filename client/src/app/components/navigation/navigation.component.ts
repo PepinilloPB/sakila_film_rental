@@ -12,6 +12,7 @@ export class NavigationComponent implements OnInit {
   @HostBinding('class') classes = 'row';
 
   busqueda: boolean = false;
+  login: boolean = false;
 
   search: string = '';
 
@@ -21,7 +22,10 @@ export class NavigationComponent implements OnInit {
   constructor(private filmService: FilmService,
               private cartService: CartService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  askForLogin(){
+    this.login = true;
   }
 
   listCart(){

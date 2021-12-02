@@ -10,8 +10,12 @@ export class CustomerService {
 
   constructor(private http:HttpClient) { }
 
-  getCustomer(/*id: String*/){
-    return this.http.get(this.API_URL + '/customer/' + 'edgar.carrasco@ucb.edu.bo'); 
+  getCustomer(){
+    return this.http.get(this.API_URL + '/customer/' + 'MARY.SMITH@sakilacustomer.org '); 
+  }
+
+  getCustomerByEmail(email: String){
+    return this.http.get(this.API_URL + '/customer/' + email); 
   }
 
   getAddress(customer_id: String){

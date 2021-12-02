@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Film } from 'src/app/models/Film';
 import { FilmService } from 'src/app/services/film.service';
 import { CartService } from 'src/app/services/cart.service';
-import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-inicio',

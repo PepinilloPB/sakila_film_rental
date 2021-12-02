@@ -1,1 +1,37 @@
-<p>pago works!</p>
+<div class="container-fluid">
+    <h1 style="margin-bottom: 20px; margin-top: 20px; text-align: center;">Pago</h1>
+    <p class="d-flex">Bienvenido {{customer.first_name}}</p>
+  </div>
+  <!--h1 *ngIf="pay">{{end}}</h1-->
+  <section style="float: left; width: 60%;">
+      <p>Se ha agregado las siguientes peliculas:</p>
+      <div class="col-md-4" *ngFor='let film of films' style="float: left; width: 50%;">
+          <div class="card border-primary mb-3" style="max-width: 20rem; margin: 20px;">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                {{film.rental_rate}}$
+            </div>
+              <div class="card-body">
+                <h4 class="card-title">{{film.title}}</h4>
+                <p class="card-text">{{film.description}}</p>
+              </div>
+            </div>
+      </div>
+  </section>
+  <section style="float: left; width: 40%;">
+    <div style="margin: 20px; text-align: center;">
+        <h3>TOTAL/DIA:</h3>
+        <p>{{cost}}$</p>
+        <h3>DSCTO:</h3>
+        <p>{{dsct}}%</p>
+        <h3>DIRECCIÓN:</h3>
+        <div class="dropdown">
+            <button class="form-control">{{direccion == '' ? 'Direcciones' : direccion}}</button>
+            <div class="dropdown-content">
+                <a (click)="setAddress(address.address)">{{address.address}}</a>
+                <a (click)="setAddress(address.address2)">{{address.address2 == '' ? '-----' : address.address2}}</a>
+            </div>
+        </div><br>
+        <button class="btn btn-info btn-block" (click)="payCart()">Pay</button>
+        <button class="btn btn-danger" (click)="backToCart()">Cancel</button>
+    </div>
+  </section>

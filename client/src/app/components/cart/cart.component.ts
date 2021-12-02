@@ -17,6 +17,7 @@ export class CartComponent implements OnInit {
 
   error: boolean = false;
   pay: boolean = false;
+  login: boolean = false;
 
   cost: number = 0;
   dsct: number = 0;
@@ -107,7 +108,7 @@ export class CartComponent implements OnInit {
     //this.checkDate();
     console.log(this.dias);
     for(let i = 0; i < this.films.length ; i++){
-      this.cost += this.films[i].rental_rate * this.dias;
+      this.cost += this.films[i].rental_rate /** this.dias*/;
     }
     this.cost = (Math.round(this.cost * 100) / 100);
     this.calculateDiscount();
@@ -162,12 +163,15 @@ export class CartComponent implements OnInit {
     const day_start = this.start.getDate();
     var day_end = this.end.getDate();
 
+    this.login = true;
 
-    this.error = false;
+    /*this.error = false;
     this.pay = true;
     this.dias = day_end - day_start;
     this.fecha_start = year_start + '-' + month_start + '-' + day_start;
-    this.fecha_end = year_end + '-' + month_end + '-' + day_end;
+    this.fecha_end = year_end + '-' + month_end + '-' + day_end;*/
+
+    
 /*
     //En el mismo mes
     if(month_start == month_end){

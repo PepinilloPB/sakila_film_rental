@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.customerController = void 0;
 //Pool para queries
 const database_1 = __importDefault(require("../database"));
+var customer;
 class CustomerController {
     //Estos metodos NO usan openid connect
     //Obtener un cliente por su email
@@ -26,6 +27,7 @@ class CustomerController {
             const customers = yield database_1.default.query(' SELECT * ' +
                 ' FROM customer ' +
                 ' WHERE email = ? ', [email]);
+            customer = customers[0];
             //Mostramos resultado
             res.send(customers[0]);
         });
@@ -84,3 +86,4 @@ class CustomerController {
     }
 }
 exports.customerController = new CustomerController();
+exports.default = customer;

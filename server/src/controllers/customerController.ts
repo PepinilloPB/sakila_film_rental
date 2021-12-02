@@ -6,12 +6,14 @@ import { OpenidRequest, OpenidResponse } from 'express-openid-connect';
 //Pool para queries
 import pool from '../database';
 
+var customer: any;
+
 class CustomerController{
 
     //Estos metodos NO usan openid connect
 
     //Obtener un cliente por su email
-    public async list_customer(req: OpenidRequest, res: OpenidResponse): Promise<any>{
+    public async list_customer(req: Request, res: Response): Promise<any>{
 
         //Parametro que tiene el email
         const { email } = req.params;
@@ -20,6 +22,8 @@ class CustomerController{
         const customers = await pool.query(' SELECT * ' + 
                                             ' FROM customer ' + 
                                             ' WHERE email = ? ', [email]);
+
+        customer = customers[0];
 
         //Mostramos resultado
         res.send(customers[0]);
@@ -187,3 +191,4 @@ class CustomerController{
 }
 
 export const customerController = new CustomerController();
+export default customer;

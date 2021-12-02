@@ -18,7 +18,8 @@ const database_1 = __importDefault(require("../database"));
 class RentalController {
     create_rental(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query('INSERT INTO rental SET ?', [req.body]);
+            yield database_1.default.query('INSERT INTO rental (rental_date, inventory_id, customer_id, return_date, staff_id) VALUES ' +
+                ' (current_date(), ? , ? , NULL, ? ) ', [req.body.inventory_id, req.body.customer_id, req.body.staff_id]);
             res.json({ message: 'rental saved' });
         });
     }

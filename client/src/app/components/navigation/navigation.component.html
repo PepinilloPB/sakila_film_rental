@@ -11,7 +11,7 @@
           <a class="nav-link" routerLink="/cart">Carrito</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/pending/2">Pendientes</a>
+          <a class="nav-link" (click)="askForLogin()">Pendientes</a>
         </li>
       </ul>
       <form class="d-flex">
@@ -23,6 +23,7 @@
     </div>
   </div>
 </nav>
+<app-login *ngIf="login"></app-login>
 <p *ngIf="busqueda">Resultados de búsqueda:</p>
 <p *ngIf="busqueda && films == 0" style="color: red;">No encontrado {{search}}</p>
 <div class="col-md-4" *ngFor='let film of films'>

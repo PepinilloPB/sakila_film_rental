@@ -2,6 +2,7 @@
   <h1 style="margin-bottom: 20px; margin-top: 20px; text-align: center;">{{pay ? 'Pago' : 'Carrito'}}</h1>
   <p *ngIf="pay" class="d-flex">Bienvenido {{customer.first_name}}</p>
 </div>
+<app-login *ngIf="login"></app-login>
 <!--h1 *ngIf="pay">{{end}}</h1-->
 <section style="float: left; width: 60%;">
     <p>Se ha agregado las siguientes peliculas:</p>
@@ -20,7 +21,7 @@
 </section>
 <section style="float: left; width: 40%;">
   <div style="margin: 20px; text-align: center;">
-    <h3 *ngIf="pay">TOTAL:</h3>
+    <h3 *ngIf="pay">TOTAL/DIA:</h3>
     <p *ngIf="pay">{{cost}}$</p>
     <h3 *ngIf="pay">DSCTO:</h3>
     <p *ngIf="pay">{{dsct}}%</p>
