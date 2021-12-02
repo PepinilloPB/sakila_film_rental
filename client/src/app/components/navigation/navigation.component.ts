@@ -1,6 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 
 import { FilmService } from 'src/app/services/film.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-navigation',
@@ -15,10 +16,22 @@ export class NavigationComponent implements OnInit {
   search: string = '';
 
   films: any = [];
+  cart: any = [];
 
-  constructor(private filmService: FilmService) { }
+  constructor(private filmService: FilmService,
+              private cartService: CartService) { }
 
   ngOnInit(): void {
+  }
+
+  listCart(){
+    this.cartService.listCart().subscribe(
+      res => {
+        this.cart = res;
+        console.log(res);
+      },
+      err => console.log(err)
+    );
   }
 
   buscar_pelicula_titulo(){

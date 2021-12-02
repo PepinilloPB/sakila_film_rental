@@ -163,7 +163,12 @@ export class CartComponent implements OnInit {
     var day_end = this.end.getDate();
 
 
-
+    this.error = false;
+    this.pay = true;
+    this.dias = day_end - day_start;
+    this.fecha_start = year_start + '-' + month_start + '-' + day_start;
+    this.fecha_end = year_end + '-' + month_end + '-' + day_end;
+/*
     //En el mismo mes
     if(month_start == month_end){
       //Si la renta esta entre 1 a 7 dias
@@ -230,7 +235,7 @@ export class CartComponent implements OnInit {
         this.error = true;
         this.pay = false;
       }
-    }
+    }*/
 
     this.calculatePrice();
     this.getCustomer();
@@ -256,7 +261,7 @@ export class CartComponent implements OnInit {
         rental_date: new Date(),
         inventory_id: this.films[i].inventory_id,
         customer_id: this.customer.customer_id,
-        return_date: new Date(this.date_end),
+        /*return_date: null,*/
         staff_id: 1,
       }
 
@@ -265,7 +270,7 @@ export class CartComponent implements OnInit {
       this.rentalService.createRental(rental).subscribe(
         res => {
           console.log(res);
-          this.router.navigate(['/cart']);
+          this.backToCart();
         },
         err => {
           console.log(err);

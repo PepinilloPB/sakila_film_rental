@@ -19,6 +19,10 @@ const routes: Routes = [
     component: InicioComponent
   },
   {
+    path: 'pending/:id',
+    component: InicioComponent
+  },
+  {
     path: 'cart',
     component: CartComponent
   }

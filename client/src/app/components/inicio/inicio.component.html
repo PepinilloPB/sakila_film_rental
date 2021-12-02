@@ -1,23 +1,25 @@
 <app-navigation></app-navigation>
-<h1 style="margin-bottom: 20px; margin-top: 20px;">Estrenos</h1>
+<h1 style="margin-bottom: 20px; margin-top: 20px;">{{pending ? 'Devoluciones Pendientes' : 'Estrenos'}}</h1>
 <div class="col-md-4" *ngFor='let premiere of premieres'>
     <div class="card text-center">
         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
             {{premiere.title}}
         </div>
         <div class="card-body">
-            <p>{{premiere.description}}</p>
+            <h4 *ngIf="pending">Pendientes: {{premiere.pending}}</h4>
+            <p *ngIf="!pending">{{premiere.description}}</p>
             <h5>Renta: {{premiere.rental_rate}}$</h5>
             <h6>{{premiere.language}}</h6>
             <h6>{{premiere.rating}}</h6>
             <h6>{{premiere.length}} min.</h6>
             <h6>{{premiere.special_features}}</h6>
             <h5>{{premiere.release_year}}</h5>
-            <button class="btn btn-info btn-block" (click)="addToCart(premiere.film_id)">Add to Cart</button>
+            <button *ngIf="!pending && !premiere.in_cart" class="btn btn-info btn-block" (click)="addToCart(premiere.film_id)">Add to Cart</button>
+            <button *ngIf="premiere.in_cart" class="btn btn-primary disabled">Added</button>
         </div>
     </div>
 </div>
-<h1 style="margin-bottom: 20px; margin-top: 20px;">Más vistos en la semana</h1>
+<h1 *ngIf="!pending" style="margin-bottom: 20px; margin-top: 20px;">Más vistos en la semana</h1>
 <div class="col-md-4" *ngFor='let week of weekly'>
     <div class="card text-center">
         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
@@ -35,7 +37,7 @@
         </div>
     </div>
 </div>
-<h1 style="margin-bottom: 20px; margin-top: 20px;">Más vistos en el año</h1>
+<h1 *ngIf="!pending" style="margin-bottom: 20px; margin-top: 20px;">Más vistos en el año</h1>
 <div class="col-md-4" *ngFor='let year of yearly'>
     <div class="card text-center">
         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">

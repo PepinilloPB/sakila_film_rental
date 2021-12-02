@@ -13,4 +13,6 @@ export interface Film{
     special_features?: string;
     last_update?: Date;
     inventory_id?: number;
+    available?: number;
+    in_cart?: boolean;
 }

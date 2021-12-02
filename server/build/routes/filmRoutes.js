@@ -17,6 +17,8 @@ class FilmRoutes {
         this.router.get("/actor/:name", filmController_1.filmController.find_by_actor);
         //Ruta para buscar por id de pelicua
         this.router.get("/id/:film_id", filmController_1.filmController.find_by_id);
+        //Ruta para listado de estrenos, mas vistos semanalmente y anualmente
+        this.router.get("/pending/:store_id", filmController_1.filmController.pending_films);
         /*
         //Ruta para listado de estrenos
         this.router.get("/movies/premiere", filmController.list_premiere);

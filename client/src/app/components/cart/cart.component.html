@@ -26,8 +26,8 @@
     <p *ngIf="pay">{{dsct}}%</p>
     <h3>FECHA DE DEVOLUCIÓN:</h3>
     <p *ngIf="!pay">La renta solo va desde 1 a 7 días</p>
-    <p *ngIf="error">Error en fecha</p>
-    <p *ngIf="pay">{{fecha_end}}</p>
+    <p *ngIf="error" style="color: red;">Error en fecha</p>
+    <!--p *ngIf="pay">{{fecha_end}}</p-->
     <h3 *ngIf="pay">DIRECCIÓN:</h3>
     <div class="dropdown" *ngIf="pay">
       <button class="form-control">{{direccion == '' ? 'Direcciones' : direccion}}</button>
@@ -36,7 +36,7 @@
         <a (click)="setAddress(address.address2)">{{address.address2 == '' ? '-----' : address.address2}}</a>
       </div>
     </div><br>
-    <input class="form-control" type="datetime-local" [(ngModel)]="date_end" *ngIf="!pay"><br>
+    <!--input class="form-control" type="datetime-local" [(ngModel)]="date_end" *ngIf="!pay"><br-->
     <button class="btn btn-info btn-block" (click)="pay ? payCart() : checkDate()">{{pay ? 'Pay' : 'Buy'}}</button>
     <button class="btn btn-danger" (click)="backToCart()" *ngIf="pay">Cancel</button>
   </div>

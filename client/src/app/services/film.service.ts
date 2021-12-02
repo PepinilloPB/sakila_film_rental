@@ -28,4 +28,8 @@ export class FilmService {
   getById(film_id: string){
     return this.http.get(this.API_URL + '/movie/id/' + film_id);
   }
+
+  getPendingFilms(id: String){
+    return this.http.get(this.API_URL + '/movie/pending/' + id); 
+  }
 }
