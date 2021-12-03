@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { indexController } from "../controllers/indexController";
 
+//Prueba hecha para auth0
 class IndexRoutes{
 
     public router: Router = Router();

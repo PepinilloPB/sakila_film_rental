@@ -251,13 +251,13 @@ class FilmController{
         res.json(films[0]);
     }
 
-    //
+    //Peliculas que no estan devueltas 
     public async pending_films(req: Request, res: Response): Promise<any>{
 
         //Parametro para ver cual tienda es de la venta
         const { store_id } = req.params;
         
-        //Pide las 10 primeras peliculas por fecha de estreno (last_update)
+        //Pide peliculas que no esten devueltas
         const films = await pool.query('SELECT f.film_id, ' + 
                                        '    f.title, ' +
                                        '    f.description, ' + 

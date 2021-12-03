@@ -12,6 +12,8 @@ class RentalRoutes{
         }
     
         config(): void{
+
+            //Metodo para guardar renta en DB
             this.router.post("/", rentalController.create_rental);
         }
 }

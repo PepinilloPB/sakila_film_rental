@@ -19,5 +19,5 @@ GET http://localhost:3000/api/movie/actor/adam%20hopper
 ###Busqueda de pelicula por id
 GET http://localhost:3000/api/movie/id/1
 
-###
+###Peliculas pendientes
 GET http://localhost:3000/api/movie/pending/2

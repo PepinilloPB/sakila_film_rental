@@ -43,7 +43,7 @@ class Server {
         this.app.use('/api/movie', filmRoutes_1.default); //rutas para peliculas
         this.app.use('/api/cart', cartRoutes_1.default); //rutas para carrito 
         this.app.use('/api/customer', customerRoutes_1.default); //rutas para cliente SIN AUTH0
-        this.app.use('/api/rental', rentalRoutes_1.default);
+        this.app.use('/api/rental', rentalRoutes_1.default); //rutas para renta 
         //this.app.use('/api/customer', requiresAuth(), customerRoutes);//rutas para cliente CON AUTH0
     }
     //Corre en puerto 3000 un nuevo servidor

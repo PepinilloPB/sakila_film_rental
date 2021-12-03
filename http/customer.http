@@ -23,7 +23,7 @@ Content-Type: application/json
 ###customer_id (necesita pasar por login SI DIRECCION LO REQUIERE)
 GET http://localhost:3000/api/customer/address/1
 
-###
+###Guardar informacion de la direccion
 POST http://localhost:3000/api/customer/address
 Content-Type: application/json
 

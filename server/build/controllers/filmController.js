@@ -247,12 +247,12 @@ class FilmController {
             res.json(films[0]);
         });
     }
-    //
+    //Peliculas que no estan devueltas 
     pending_films(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             //Parametro para ver cual tienda es de la venta
             const { store_id } = req.params;
-            //Pide las 10 primeras peliculas por fecha de estreno (last_update)
+            //Pide peliculas que no esten devueltas
             const films = yield database_1.default.query('SELECT f.film_id, ' +
                 '    f.title, ' +
                 '    f.description, ' +

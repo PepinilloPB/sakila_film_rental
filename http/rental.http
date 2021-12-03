@@ -1,0 +1,11 @@
+###Guardado de datos de renta
+POST http://localhost:3000/api/rental
+Content-Type: application/json
+
+{
+    "rental_date": "", 
+    "inventory_id": 1, 
+    "customer_id": 600, 
+    "return_date": null, 
+    "staff_id": 1
+}
