@@ -177,7 +177,7 @@ export class PagoComponent implements OnInit {
         err => {
           console.log(err);
         }
-      );
+      ); 
     }
 
     console.log(this.rentals);
